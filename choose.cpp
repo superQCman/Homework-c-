@@ -95,13 +95,13 @@ bool Choose::init()
     this->addChild(spriteD);
 
     spriteD2 = Sprite::create("tick.png"); // 假设图片为 "tick.png"
-    if (store_message::choosePlayer[0] == 1)spriteD2->setPosition(posC4);
-    else if (store_message::choosePlayer[1] == 1)spriteD2->setPosition(posC5);
+    if (store_message::chooseWeapon[0] == 1)spriteD2->setPosition(posC4);
+    else if (store_message::chooseWeapon[1] == 1)spriteD2->setPosition(posC5);
     this->addChild(spriteD2);
 
     spriteD3 = Sprite::create("tick.png"); // 假设图片为 "tick.png"
-    if (store_message::choosePlayer[0] == 1)spriteD3->setPosition(posC6);
-    else if (store_message::choosePlayer[1] == 1)spriteD3->setPosition(posC7);
+    if (store_message::chooseWeapon[2] == 1)spriteD3->setPosition(posC6);
+    else if (store_message::chooseWeapon[3] == 1)spriteD3->setPosition(posC7);
     this->addChild(spriteD3);
 
     return_button = ui::Button::create("return.png", "return_click.png");

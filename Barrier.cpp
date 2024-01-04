@@ -62,11 +62,11 @@ void rocket::set_rand_num(int randnum) {
 	rand_num = randnum;
 }
 //设置能摧毁的障碍物
-void pensil::SetDistroyNum() {
+void razor::SetDistroyNum() {
 	if(store_message::chooseWeapon[0]==1)distroy_num = store_message::WeaponPower[0];
 	else distroy_num = store_message::WeaponPower[1];
 }
-void razor::SetDistroyNum() {
+void pensil::SetDistroyNum() {
 	if (store_message::chooseWeapon[2] == 1)distroy_num = store_message::WeaponPower[2];
 	else distroy_num = store_message::WeaponPower[3];
 }
