@@ -49,7 +49,16 @@ bool PoolScene::init() {
         spriteArray[i] = Sprite::create(initialFilenames[i]);
         spriteArray[i]->setPosition(visibleSize.width / 5 * (i + 1), upperQuarterY);
         this->addChild(spriteArray[i], 1);
-
+        std::string show = "";
+        if (i < 2 && store_message::paidPlayer[i + 1] == 1 || i >= 2 && store_message::paidWeapon[(i - 1)*2-1]==1) {
+            show = "All ready bought";
+        }
+        else
+            show = std::to_string((i + 1) * 100)+" coins";
+        auto show_price = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+        show_price->setPosition(Vec2(spriteArray[i]->getPosition().x, spriteArray[i]->getPosition().y- spriteArray[i] ->getContentSize().height/2 - show_price->getContentSize().height));
+        show_price->setColor(Color3B::RED);
+        this->addChild(show_price);
         // 为每个图片添加点击事件
         auto touchListener = EventListenerTouchOneByOne::create();
         touchListener->setSwallowTouches(true);
@@ -67,6 +76,7 @@ bool PoolScene::init() {
     auto returnButton = ui::Button::create();
     returnButton->setTitleText("Return");
     returnButton->setTitleFontSize(24);
+    returnButton->setColor(Color3B::RED);
 
     // 设置按钮位置（屏幕右下角）
     //returnButton->setPosition(Vec2(visibleSize.width - returnButton->getContentSize().width / 2,
@@ -84,57 +94,6 @@ bool PoolScene::init() {
 
     this->addChild(returnButton);
 
-    // 创建 "check1" 按钮
-    auto check1Button = ui::Button::create();
-    check1Button->setTitleText("Left");
-    check1Button->setTitleFontSize(24);
-    check1Button->setPosition(Vec2(visibleSize.width / 3, visibleSize.height / 12)); // 设置按钮位置
-
-    // 添加按钮点击事件（使用 Lambda 表达式）
-    check1Button->addTouchEventListener([this](Ref* sender, ui::Widget::TouchEventType type) {
-        if (type == ui::Widget::TouchEventType::ENDED) {
-            this->n = 1;
-            // 更改图片为 "a1.png" 到 "a5.png"
-            for (int i = 0; i < 4; i++) {
-                std::string newFilename = "a" + std::to_string(i + 1) + ".png";
-                spriteArray[i]->setTexture(newFilename);
-            }
-            // 将图片移动到屏幕上半部分
-            float upperQuarterY = Director::getInstance()->getVisibleSize().height * 0.75;
-            for (int i = 0; i < 4; i++) {
-                spriteArray[i]->setPosition(spriteArray[i]->getPosition().x, upperQuarterY);
-            }
-        }
-        });
-
-    this->addChild(check1Button);
-
-    // 创建 "check2" 按钮
-    auto check2Button = ui::Button::create();
-    check2Button->setTitleText("Right");
-    check2Button->setTitleFontSize(24);
-    check2Button->setPosition(Vec2(visibleSize.width * 2 / 3, visibleSize.height / 12)); // 设置按钮位置
-
-    // 添加按钮点击事件（使用 Lambda 表达式）
-    check2Button->addTouchEventListener([this](Ref* sender, ui::Widget::TouchEventType type) {
-        if (type == ui::Widget::TouchEventType::ENDED) {
-            this->n = 2;
-            // 更改图片为 "a6.png" 到 "a10.png"
-            for (int i = 0; i < 4; i++) {
-                std::string newFilename = "a" + std::to_string(i + 6) + ".png";
-                spriteArray[i]->setTexture(newFilename);
-            }
-            // 将图片移动到屏幕上半部分
-            float upperQuarterY = Director::getInstance()->getVisibleSize().height * 0.75;
-            for (int i = 0; i < 4; i++) {
-                spriteArray[i]->setPosition(spriteArray[i]->getPosition().x, upperQuarterY);
-            }
-        }
-    });
-
-    this->addChild(check2Button);
-
-
     return true;
 }
 
@@ -143,45 +102,68 @@ void PoolScene::spriteTouched(Ref* pSender, float lowerQuarterY) {
     const std::string alternateFilenames2[] = { "intro_Lightning Nick.png", "intro_chinchilla.png", "intro_Aegis.png", "intro_fireball.png" };
 
     for (int i = 0; i < 4; i++) {
-        if (pSender == spriteArray[i]&& store_message::coin>=(i+1)*100) {
-            std::string newFilename;
-            if (n == 1) {
-                newFilename = alternateFilenames1[i];
+        
+        if (pSender == spriteArray[i]) {
+            if(store_message::coin >= (i + 1) * 100 && (i < 2 && store_message::paidPlayer[i + 1] == 0 || i >= 2 && store_message::paidWeapon[(i - 1) * 2 - 1] == 0)){
+                std::string newFilename;
+                if (n == 1) {
+                    newFilename = alternateFilenames1[i];
+                }
+                else if (n == 2) {
+                    newFilename = alternateFilenames2[i];
+                }
+                if (i < 2) {
+                    store_message::paidPlayer[i + 1] = 1;
+                    store_message::coin -= (i + 1) * 100;
+                }
+                else {
+                    store_message::paidWeapon[i - 1] = 1;
+                    store_message::coin -= (i + 1) * 100;
+                }
+                std::string show = "Coin:" + std::to_string(store_message::coin);
+                show_reward->setString(show);
+                spriteArray[i]->setTexture(newFilename);
+                spriteArray[i]->setPosition(spriteArray[i]->getPosition().x, lowerQuarterY);
+                ofstream FileOut("PaidPlayers.txt");
+                for (auto& i : store_message::paidPlayer) {
+                    FileOut << i << " ";
+                }
+                FileOut << endl;
+                for (auto& i : store_message::choosePlayer) {
+                    FileOut << i << " ";
+                }
+                FileOut.close();
+                ofstream FileOut2("weapon.txt");
+                for (auto& i : store_message::paidWeapon) {
+                    FileOut2 << i << " ";
+                }
+                FileOut2 << endl;
+                for (auto& i : store_message::chooseWeapon) {
+                    FileOut2 << i << " ";
+                }
+                FileOut2.close();
+                ofstream FileOut3("Coin.txt");
+                FileOut3 << store_message::coin;
+                FileOut3.close();
+                break;
             }
-            else if (n == 2) {
-                newFilename = alternateFilenames2[i];
+            if (store_message::coin < (i + 1) * 100 && (i < 2 && store_message::paidPlayer[i + 1] == 0 || i >= 2 && store_message::paidWeapon[(i - 1) * 2 - 1] == 0)) {
+                std::string show = "Your coin is not enough";
+                show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+                show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 850));
+                show_warning->setColor(Color3B::RED);
+                this->addChild(show_warning);
+                // 设置透明度为0，使文本完全透明
+                show_warning->setOpacity(0);
+                // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+                auto fadeAction = FadeIn::create(1.0f);
+                auto delay = DelayTime::create(2.0f);
+                auto fadeout = FadeOut::create(1.0f);
+
+                auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+                // 将动画应用于Label节点
+                show_warning->runAction(sequenceAction);
             }
-            if (i < 2) { 
-                store_message::paidPlayer[i + 1] = 1;
-                store_message::coin -= (i + 1) * 100;
-            }
-            else {
-                store_message::paidWeapon[i - 1] = 1;
-                store_message::coin -= (i + 1) * 100;
-            }
-            std::string show = "Coin:" + std::to_string(store_message::coin);
-            show_reward->setString(show);
-            spriteArray[i]->setTexture(newFilename);
-            spriteArray[i]->setPosition(spriteArray[i]->getPosition().x, lowerQuarterY);
-            ofstream FileOut("PaidPlayers.txt");
-            for (auto& i : store_message::paidPlayer) {
-                FileOut << i << " ";
-            }
-            FileOut << endl;
-            for (auto& i : store_message::choosePlayer) {
-                FileOut << i << " ";
-            }
-            FileOut.close();
-            ofstream FileOut2("weapon.txt");
-            for (auto& i : store_message::paidWeapon) {
-                FileOut2 << i << " ";
-            }
-            FileOut2 << endl;
-            for (auto& i : store_message::chooseWeapon) {
-                FileOut2 << i << " ";
-            }
-            FileOut2.close();
-            break;
         }
     }
 }
