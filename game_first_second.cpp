@@ -444,7 +444,7 @@ void game_first_second::update(float delta) {
                 }
             }
             for (int i = 0;i < wepon_list.size();i++) {
-                if (boss_b.intersectsRect(wepon_list[i])) {
+                if (boss_b.intersectsRect(wepon_list[i])&& Weapon.size()>0) {
                     Vec2 position = Vec2(Weapon[i]->sprite->getPosition().x + Weapon[i]->sprite->getContentSize().width / 2,
                         Weapon[i]->sprite->getPosition().y);
                     auto boom2 = Game_first::Boom(position);

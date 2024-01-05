@@ -95,13 +95,13 @@ bool Choose::init()
     this->addChild(spriteD);
 
     spriteD2 = Sprite::create("tick.png"); // 假设图片为 "tick.png"
-    if (store_message::choosePlayer[0] == 1)spriteD2->setPosition(posC4);
-    else if (store_message::choosePlayer[1] == 1)spriteD2->setPosition(posC5);
+    if (store_message::chooseWeapon[0] == 1)spriteD2->setPosition(posC4);
+    else if (store_message::chooseWeapon[1] == 1)spriteD2->setPosition(posC5);
     this->addChild(spriteD2);
 
     spriteD3 = Sprite::create("tick.png"); // 假设图片为 "tick.png"
-    if (store_message::choosePlayer[0] == 1)spriteD3->setPosition(posC6);
-    else if (store_message::choosePlayer[1] == 1)spriteD3->setPosition(posC7);
+    if (store_message::chooseWeapon[2] == 1)spriteD3->setPosition(posC6);
+    else if (store_message::chooseWeapon[3] == 1)spriteD3->setPosition(posC7);
     this->addChild(spriteD3);
 
     return_button = ui::Button::create("return.png", "return_click.png");
@@ -123,26 +123,66 @@ void Choose::selectDifficulty(int level)
     Vec2 newPosition;
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    if (level == 1) {
+    if (level == 1&&store_message::paidPlayer[0]==1) {
         newPosition = Vec2(visibleSize.width / 4, visibleSize.height * 5 / 8);
         store_message::choosePlayer[0] = 1;
         store_message::choosePlayer[1] = 0;
         store_message::choosePlayer[2] = 0;
     }
-    else if (level == 2) {
-        newPosition = Vec2(visibleSize.width / 2, visibleSize.height * 5 / 8);
-        store_message::choosePlayer[1] = 1;
-        store_message::choosePlayer[0] = 0;
-        store_message::choosePlayer[2] = 0;
+    else if (level == 2 ) {
+        if (store_message::paidPlayer[1] == 1) {
+            newPosition = Vec2(visibleSize.width / 2, visibleSize.height * 5 / 8);
+            store_message::choosePlayer[1] = 1;
+            store_message::choosePlayer[0] = 0;
+            store_message::choosePlayer[2] = 0;
+        }
+        else {
+            std::string show = "You haven't bought it";
+            auto show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+            show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 450));
+            show_warning->setColor(Color3B::RED);
+            this->addChild(show_warning);
+            // 设置透明度为0，使文本完全透明
+            show_warning->setOpacity(0);
+            // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+            auto fadeAction = FadeIn::create(1.0f);
+            auto delay = DelayTime::create(2.0f);
+            auto fadeout = FadeOut::create(1.0f);
+
+            auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+            // 将动画应用于Label节点
+            show_warning->runAction(sequenceAction);
+            newPosition = Vec2(visibleSize.width / 4, visibleSize.height * 5 / 8); // 默认位置
+        }
     }
     else if (level == 3) {
-        newPosition = Vec2(visibleSize.width * 3 / 4, visibleSize.height * 5 / 8);
-        store_message::choosePlayer[2] = 1;
-        store_message::choosePlayer[1] = 0;
-        store_message::choosePlayer[0] = 0;
+        if (store_message::paidPlayer[2] == 1) {
+            newPosition = Vec2(visibleSize.width * 3 / 4, visibleSize.height * 5 / 8);
+            store_message::choosePlayer[2] = 1;
+            store_message::choosePlayer[1] = 0;
+            store_message::choosePlayer[0] = 0;
+        }
+        else {
+            std::string show = "You haven't bought it";
+            auto show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+            show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 450));
+            show_warning->setColor(Color3B::RED);
+            this->addChild(show_warning);
+            // 设置透明度为0，使文本完全透明
+            show_warning->setOpacity(0);
+            // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+            auto fadeAction = FadeIn::create(1.0f);
+            auto delay = DelayTime::create(2.0f);
+            auto fadeout = FadeOut::create(1.0f);
+
+            auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+            // 将动画应用于Label节点
+            show_warning->runAction(sequenceAction);
+            newPosition = Vec2(visibleSize.width / 4, visibleSize.height * 5 / 8); // 默认位置
+        }
     }
     else
-        newPosition = Vec2(visibleSize.width / 2, visibleSize.height * 5 / 8); // 默认位置
+        newPosition = Vec2(visibleSize.width / 4, visibleSize.height * 5 / 8); // 默认位置
     ofstream FileOut("PaidPlayers.txt");
     for (auto& i : store_message::paidPlayer) {
         FileOut << i << " ";
@@ -164,15 +204,55 @@ void Choose::selectDifficulty_2(int level)
     Vec2 newPosition;
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    if (level == 4&& store_message::paidWeapon[0]==1) {
-        newPosition = Vec2(visibleSize.width * 0.2, visibleSize.height * 1 / 8);
-        store_message::chooseWeapon[0] = 1;
-        store_message::chooseWeapon[1] = 0;
+    if (level == 4) {
+        if(store_message::paidWeapon[0] == 1){
+            newPosition = Vec2(visibleSize.width * 0.2, visibleSize.height * 1 / 8);
+            store_message::chooseWeapon[0] = 1;
+            store_message::chooseWeapon[1] = 0;
+        }
+        else {
+            std::string show = "You haven't bought it";
+            auto show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+            show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 450));
+            show_warning->setColor(Color3B::RED);
+            this->addChild(show_warning);
+            // 设置透明度为0，使文本完全透明
+            show_warning->setOpacity(0);
+            // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+            auto fadeAction = FadeIn::create(1.0f);
+            auto delay = DelayTime::create(2.0f);
+            auto fadeout = FadeOut::create(1.0f);
+
+            auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+            // 将动画应用于Label节点
+            show_warning->runAction(sequenceAction);
+            newPosition = Vec2(visibleSize.width * 0.2, visibleSize.height * 1 / 8);
+        }
     }
-    else if (level == 5 && store_message::paidWeapon[1] == 1) {
-        newPosition = Vec2(visibleSize.width * 0.4, visibleSize.height * 1 / 8);
-        store_message::chooseWeapon[1] = 1;
-        store_message::chooseWeapon[0] = 0;
+    else if (level == 5 ) {
+        if(store_message::paidWeapon[1] == 1){
+            newPosition = Vec2(visibleSize.width * 0.4, visibleSize.height * 1 / 8);
+            store_message::chooseWeapon[1] = 1;
+            store_message::chooseWeapon[0] = 0;
+        }
+        else {
+            std::string show = "You haven't bought it";
+            auto show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+            show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 450));
+            show_warning->setColor(Color3B::RED);
+            this->addChild(show_warning);
+            // 设置透明度为0，使文本完全透明
+            show_warning->setOpacity(0);
+            // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+            auto fadeAction = FadeIn::create(1.0f);
+            auto delay = DelayTime::create(2.0f);
+            auto fadeout = FadeOut::create(1.0f);
+
+            auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+            // 将动画应用于Label节点
+            show_warning->runAction(sequenceAction);
+            newPosition = Vec2(visibleSize.width * 0.2, visibleSize.height * 1 / 8);
+        }
     }
     else {
         newPosition = Vec2(visibleSize.width * 0.2, visibleSize.height * 1 / 8);
@@ -198,14 +278,54 @@ void Choose::selectDifficulty_3(int level)
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
     if (level == 6) {
-        newPosition = Vec2(visibleSize.width * 0.6, visibleSize.height * 1 / 8);
-        store_message::chooseWeapon[2] = 1;
-        store_message::chooseWeapon[3] = 0;
+        if(store_message::paidWeapon[2] == 1){
+            newPosition = Vec2(visibleSize.width * 0.6, visibleSize.height * 1 / 8);
+            store_message::chooseWeapon[2] = 1;
+            store_message::chooseWeapon[3] = 0;
+        }
+        else {
+            std::string show = "You haven't bought it";
+            auto show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+            show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 450));
+            show_warning->setColor(Color3B::RED);
+            this->addChild(show_warning);
+            // 设置透明度为0，使文本完全透明
+            show_warning->setOpacity(0);
+            // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+            auto fadeAction = FadeIn::create(1.0f);
+            auto delay = DelayTime::create(2.0f);
+            auto fadeout = FadeOut::create(1.0f);
+
+            auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+            // 将动画应用于Label节点
+            show_warning->runAction(sequenceAction);
+            newPosition = Vec2(visibleSize.width * 0.6, visibleSize.height * 1 / 8);
+        }
     }
     else if (level == 7) {
-        newPosition = Vec2(visibleSize.width * 0.8, visibleSize.height * 1 / 8);
-        store_message::chooseWeapon[3] = 1;
-        store_message::chooseWeapon[2] = 0;
+        if(store_message::paidWeapon[3] == 1){
+            newPosition = Vec2(visibleSize.width * 0.8, visibleSize.height * 1 / 8);
+            store_message::chooseWeapon[3] = 1;
+            store_message::chooseWeapon[2] = 0;
+        }
+        else {
+            std::string show = "You haven't bought it";
+            auto show_warning = Label::createWithTTF(show, "fonts/Marker Felt.ttf", 55);
+            show_warning->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 450));
+            show_warning->setColor(Color3B::RED);
+            this->addChild(show_warning);
+            // 设置透明度为0，使文本完全透明
+            show_warning->setOpacity(0);
+            // 创建渐变动画，从透明度0渐变到255，持续时间为1秒
+            auto fadeAction = FadeIn::create(1.0f);
+            auto delay = DelayTime::create(2.0f);
+            auto fadeout = FadeOut::create(1.0f);
+
+            auto sequenceAction = Sequence::create(fadeAction, delay, fadeout, nullptr);
+            // 将动画应用于Label节点
+            show_warning->runAction(sequenceAction);
+            newPosition = Vec2(visibleSize.width * 0.6, visibleSize.height * 1 / 8);
+        }
     }
     else {
         newPosition = Vec2(visibleSize.width * 0.6, visibleSize.height * 1 / 8);
