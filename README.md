@@ -1,25 +1,25 @@
 # Homework-c++
 代码模块介绍：
 
-1、HelloWorldScene 初始化场景
+- HelloWorldScene 初始化场景
 
-2、Scene_one 菜单场景
+- Scene_one 菜单场景
 
-3、Game_fist 第一关
+- Game_fist 第一关
 
-4、game_first_second 第二关
+- game_first_second 第二关
 
-5、store_message 统一管理不同场景的共用变量
+- store_message 统一管理不同场景的共用变量
 
-6、player player类（包括玩家和boss）
+- player player类（包括玩家和boss）
 
-7、Barrier 障碍物类（包括武器类）
+- Barrier 障碍物类（包括武器类）
 
-8、Difficult 难度选择场景
+- Difficult 难度选择场景
 
-9、choose 仓库场景，选择皮肤，武器
+- choose 仓库场景，选择皮肤，武器
 
-10、PoolScene 商店场景
+- PoolScene 商店场景
 
 有啥不懂的可以在GitHub或微信上问我。
 
@@ -39,7 +39,7 @@ class AppDelegate : private cocos2d::Application 是一个继承自cocos2d::Appl
 
 该头文件的作用是定义了一个AppDelegate类，它是一个应用程序的入口点，并包含了应用程序的生命周期函数。
 
-## [1/11] Barrier.h
+## 1. Barrier.h
 
 这个程序文件名为Barrier.h，主要是定义了一系列的类和它们的成员函数。
 
@@ -61,7 +61,7 @@ class AppDelegate : private cocos2d::Application 是一个继承自cocos2d::Appl
 
 这个程序文件是一个C++头文件，定义了障碍物类的继承关系，并实现了一些成员函数。
 
-## [2/11] choose.h
+## 2. choose.h
 
 这个程序文件名是`choose.h`，代码包含了一个名为`Choose`的类，继承自`Difficulty`类。它还包含了`cocos2d.h`和`ui/CocosGUI.h`两个头文件。
 
@@ -81,23 +81,23 @@ class AppDelegate : private cocos2d::Application 是一个继承自cocos2d::Appl
 
 该文件中的代码使用了预处理指令`#ifndef`和`#define`，来防止重复包含头文件。可以推测该文件是一个用于选择游戏困难等级的界面类。
 
-## [3/11] Difficulty.h
+## 3. Difficulty.h
 
 这是一个名为Difficulty.h的头文件，用于定义一个名为Difficulty的类。这个类继承自cocos2d::Scene类，并用于创建一个场景对象。类中包含了一些成员变量和成员函数，如按钮对象、精灵对象、标签对象等。其中，createScene函数用于创建场景，init函数用于初始化场景，selectDifficulty函数用于选择难度级别。此外，还定义了一些成员变量和成员函数用于处理游戏难度相关的逻辑。
 
-## [4/11] Game_first.h
+## 4. Game_first.h
 
 这个程序文件是名为Game_first.h的头文件。它包含了一些必要的头文件和一些类的定义。其中包含了一个游戏场景类Game_first，这个类继承自Scene_one类。这个类中定义了一些成员变量和成员函数，包括创建场景的静态函数，初始化函数，关闭菜单回调函数，更新函数，按键按下和释放事件处理函数等。此外，还有一些私有成员变量和一些容器类型的变量，用于存储不同类型的障碍物、武器等。
 
-## [5/11] game_first_second.h
+## 5. game_first_second.h
 
 这是一个名为game_first_second的头文件，包含了一些必要的头文件和类的声明。这个类继承自Game_first类，并添加了一些额外的成员和方法。它定义了一些变量、函数和成员变量，并声明了一些继承的方法。它还定义了一些私有成员变量和公有成员函数。这个头文件的目的是提供一个游戏的第二个场景。
 
-## [6/11] HelloWorldScene.h
+## 6. HelloWorldScene.h
 
 这个文件是一个Cocos2d-x游戏项目中的场景类的头文件。它包含了类声明和一些函数定义，如创建场景、初始化场景和关闭场景的回调函数。这个文件通过宏定义和条件编译实现了头文件的保护措施，避免被重复包含。该类是从Cocos2d-x的Scene类派生而来，用于构建游戏的场景。
 
-## [7/11] player.h
+## 7. player.h
 
 该文件名为player.h，是一个源代码文件。代码定义了一个名为Base_player的基类和两个派生类Fireboy和Teacher。Base_player类具有以下成员函数和成员变量：
 
@@ -152,7 +152,7 @@ Teacher类是Fireboy类的派生类，具有以下成员函数和成员变量：
 
 该程序文件主要定义了玩家的基类和两个派生类，用于描述玩家的属性和行为。
 
-## [8/11] PoolScene.h
+## 8. PoolScene.h
 
 该文件是一个名为"PoolScene.h"的头文件，用于定义一个名为"PoolScene"的类。该类继承自"Scene_one"类，并使用了"cocos2d"和"Scene_one.h"的头文件。
 
@@ -167,7 +167,7 @@ Teacher类是Fireboy类的派生类，具有以下成员函数和成员变量：
 
 类定义的最后使用了宏CREATE_FUNC(PoolScene)，该宏用于自定义创建一个该类的实例的静态函数。
 
-## [9/11] Scene_one.h
+## 9. Scene_one.h
 
 这是一个名为Scene_one.h的头文件，它定义了一个名为Scene_one的类，该类继承自cocos2d::Scene。头文件还包含了cocos2d.h头文件，并使用了cocos2d命名空间。
 
@@ -179,7 +179,7 @@ Scene_one类具有一些成员函数，例如createScene()、init()、menuCloseC
 
 头文件的最后，使用了CREATE_FUNC宏来声明一个Scene_one对象的创建函数。
 
-## [10/11] store_message.h
+## 10. store_message.h
 
 这是一个名为store_message的头文件，它定义了一个类store_message。该类包含了一些静态成员变量和静态成员函数。
 
@@ -201,7 +201,7 @@ Scene_one类具有一些成员函数，例如createScene()、init()、menuCloseC
 
 该头文件没有实现具体的函数，只定义了类和成员变量。
 
-## 用一张Markdown表格简要描述以下文件的功能：AppDelegate.h, Barrier.h, choose.h, Difficulty.h, Game_first.h, game_first_second.h, HelloWorldScene.h, player.h, PoolScene.h, Scene_one.h, store_message.h。
+## 11. 用一张Markdown表格简要描述以下文件的功能：AppDelegate.h, Barrier.h, choose.h, Difficulty.h, Game_first.h, game_first_second.h, HelloWorldScene.h, player.h, PoolScene.h, Scene_one.h, store_message.h。
 
 | 文件                 | 功能                                                         |
 |--------------------|------------------------------------------------------------|
@@ -272,6 +272,3 @@ Teacher类也继承自Base_player类。
        |
     /     \
 Fireboy  Teacher
-```
-
- 
