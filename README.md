@@ -201,7 +201,7 @@ Scene_one类具有一些成员函数，例如createScene()、init()、menuCloseC
 
 该头文件没有实现具体的函数，只定义了类和成员变量。
 
-## 用一张Markdown表格简要描述以下文件的功能：AppDelegate.h, Barrier.h, choose.h, Difficulty.h, Game_first.h, game_first_second.h, HelloWorldScene.h, player.h, PoolScene.h, Scene_one.h, store_message.h。根据以上分析，用一句话概括程序的整体功能。
+## 用一张Markdown表格简要描述以下文件的功能：AppDelegate.h, Barrier.h, choose.h, Difficulty.h, Game_first.h, game_first_second.h, HelloWorldScene.h, player.h, PoolScene.h, Scene_one.h, store_message.h。
 
 | 文件                 | 功能                                                         |
 |--------------------|------------------------------------------------------------|
