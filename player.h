@@ -70,5 +70,23 @@ public:
 	void throw_weapon(Base_player*, std::string, Barrier_base*);
 };
 
+class Fox : public Fireboy {
+public:
+	Fox(double groudY, std::string first_pic, std::string second_first, std::string second_second, int pic_num, int position) :Fireboy(groudY, first_pic, second_first, second_second, pic_num, position) {
+		set_blood();
+		set_accuracy_time();
+	}
+	void set_blood();
+	void set_accuracy_time() override;
+};
+
+class Rat : public Fireboy {
+public:
+	Rat(double groudY, std::string first_pic, std::string second_first, std::string second_second, int pic_num, int position) :Fireboy(groudY, first_pic, second_first, second_second, pic_num, position) {
+		set_blood();
+	}
+	void set_blood();
+};
+
 //Fireboy2，Fireboy3...继承Fireboy，改变sleep_time，blood，accuracy_time
 

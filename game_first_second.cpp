@@ -111,7 +111,9 @@ bool game_first_second::init() {
     }
 
     before.pop_back();
-    fireboy = new Fireboy(groundY, store_message::player, before, after, 8, 1);//人物初始化
+    if (store_message::choosePlayer[0] == 1)fireboy = new Fireboy(groundY, store_message::player, before, after, 8, 1);//人物初始化
+    else if (store_message::choosePlayer[1] == 1)fireboy = new Fox(groundY, store_message::player, before, after, 8, 1);//人物初始化
+    else if (store_message::choosePlayer[2] == 1)fireboy = new Rat(groundY, store_message::player, before, after, 8, 1);//人物初始化
     fireboy->sprite->setScale(0.4f);
     fireboy->repeat = RepeatForever::create(fireboy->animate);
     fireboy->sprite->runAction(fireboy->repeat);

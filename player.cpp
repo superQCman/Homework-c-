@@ -52,11 +52,17 @@ int& Base_player::get_small_sleep_time() {
 void Fireboy::set_accuracy_time() {
     get_accuracy_time() = 180;
 }
+
+void Fox::set_accuracy_time() {
+    get_accuracy_time() = 300;
+}
+
 //设置Fireboy的体力恢复时间
 void Fireboy::set_sleep_time() {
     get_sleep_time() = 900;
     energy=full_energy = 100;
 }
+
 
 void Fireboy::set_small_sleep_time() {
     get_small_sleep_time() = 900;
@@ -120,8 +126,8 @@ void Fireboy::set_blood() {
 
 //设置Teacher血量
 void Teacher::set_blood() {
-    this->blood = 80.0;
-    this->blood_now = 80.0;
+    this->blood = 40.0*store_message::DegreeOfDif;
+    this->blood_now = 40.0 * store_message::DegreeOfDif;
 }
 
 //设置Fireboy攻击参数
@@ -146,5 +152,15 @@ void Teacher::throw_weapon(Base_player* boss, std::string, Barrier_base* newSpri
     newSprite->set_velocity(-300);
     newSprite->sprite->setPosition(Vec2(boss->sprite->getPositionX() - 20, boss->sprite->getPositionY()));
     
+}
+
+void Fox::set_blood() {
+    this->blood = 40;
+    this->blood_now = 40;
+}
+
+void Rat::set_blood() {
+    this->blood = 80;
+    this->blood_now = 80;
 }
 
