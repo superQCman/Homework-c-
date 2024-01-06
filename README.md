@@ -254,7 +254,7 @@ Falldown类也继承自Barrier_base类。
     weapon        NotMove
        |   
     /     \
-  pensil  razor
+  pencil  razor
 ```
 
 其中，Barrier_base是顶级基类，rocket、rocket_back和NotMove是直接继承自Barrier_base的子类，weapon是继承自rocket_back的子类，pensil和razor是继承自weapon的子类，Falldown是继承自Barrier_base的子类。
@@ -269,6 +269,8 @@ Teacher类也继承自Base_player类。
 所以，继承关系可以表示为：
 ```
    Base_player
-       |
-    /     \
-Fireboy  Teacher
+        |
+     Fireboy
+     /  |  \
+    /   |   \
+Teacher Fox  Rat
