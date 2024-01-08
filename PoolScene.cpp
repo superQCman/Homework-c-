@@ -117,7 +117,7 @@ void PoolScene::spriteTouched(Ref* pSender, float lowerQuarterY) {
                     store_message::coin -= (i + 1) * 100;
                 }
                 else {
-                    store_message::paidWeapon[i - 1] = 1;
+                    store_message::paidWeapon[2*i - 3] = 1;
                     store_message::coin -= (i + 1) * 100;
                 }
                 std::string show = "Coin:" + std::to_string(store_message::coin);
